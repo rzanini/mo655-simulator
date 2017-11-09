@@ -223,6 +223,7 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 		meanDelayPackets += delay;
 		meanLostPackets += i->second.lostPackets/((i->second.timeLastTxPacket - i->second.timeFirstTxPacket).GetSeconds());
 		std::stringstream ss;
+		ss << "./respository/Datasets/";
 		char nodeDist[2] = "";
 		//Nó de origem mais próximo
 		if(devicesIP.GetAddress(nearestNode) == t.sourceAddress){
@@ -274,6 +275,7 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
   cout << "Lost Packets (mean) : " << meanLostPackets << endl;
 
   std::stringstream ss;
+  ss << "./respository/Datasets/";
   
   // if UDP/TCP/MISTO
     switch(transportMode){
