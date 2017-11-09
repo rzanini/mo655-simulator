@@ -224,14 +224,13 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 		meanLostPackets += i->second.lostPackets/((i->second.timeLastTxPacket - i->second.timeFirstTxPacket).GetSeconds());
 		std::stringstream ss;
 		ss << "./respository/Datasets/";
-		char nodeDist[2] = "";
 		//Nó de origem mais próximo
 		if(devicesIP.GetAddress(nearestNode) == t.sourceAddress){
-			nodeDist = "MP"
+			ss << "MP";
 		}
 		//Nó de origem mais distante
 		else if (devicesIP.GetAddress(farthestNode) == t.sourceAddress){
-			nodeDist = "ML"
+			ss << "ML";
 		}
 		
 		switch(transportMode){
