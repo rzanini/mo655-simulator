@@ -42,8 +42,8 @@ void findNode(uint32_t ApX, uint32_t ApY, uint32_t NodeX, uint32_t NodeY, size_t
   if(id == 0){
     nearestNode = id;
     farthestNode = id;
-    dnearestNode = result;
-    dfarthestNode = result;
+    nearestNodeDistance = result;
+    farthestNodeDistance = result;
   }
   else{
     if(result > farthestNodeDistance){
