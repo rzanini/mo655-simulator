@@ -222,49 +222,52 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 		delay = ((delay > 0) ? delay : 0);
 		meanDelayPackets += delay;
 		meanLostPackets += i->second.lostPackets/((i->second.timeLastTxPacket - i->second.timeFirstTxPacket).GetSeconds());
-		std::stringstream ss;
-		ss << "./respository/Datasets/";
-		//Nó de origem mais próximo
-		if(devicesIP.GetAddress(nearestNode) == t.sourceAddress){
-			ss << "MP";
-		}
-		//Nó de origem mais distante
-		else if (devicesIP.GetAddress(farthestNode) == t.sourceAddress){
-			ss << "ML";
-		}
 		
-		switch(transportMode){
-				case 0:
-					if(traffic){
-						ss <<prefix<<"_"<<nodeDist<<"_UDP_cbr.csv";
-					}
-					else{
-						ss <<prefix<<"_"<<nodeDist<<"_UDP_burst.csv";
-					}
-					break;
-				case 1:
-					if(traffic){
-						ss <<prefix<<"_"<<nodeDist<<"_TCP_cbr.csv";
-					}
-					else{
-						ss <<prefix<<"_"<<nodeDist<<"_TCP_burst.csv";
-					}
-					break;
-				case 2:
-					if(traffic){
-						ss <<prefix<<"_"<<nodeDist<<"_MISTO_cbr.csv";
-					}
-					else{
-						ss <<prefix<<"_"<<nodeDist<<"_MISTO_burst.csv";
-					}
-					break;
+		if(t.sourceAddress == devicesIP.GetAddress(nearestNode) || t.sourceAddress == devicesIP.GetAddress(farthestNode)){
+			std::stringstream ss;
+			ss << "./respository/Datasets/";
+			//Nó de origem mais próximo
+			if(devicesIP.GetAddress(nearestNode) == t.sourceAddress){
+				ss <<prefix<<"_"<< "MP";
+			}
+			//Nó de origem mais distante
+			else if (devicesIP.GetAddress(farthestNode) == t.sourceAddress){
+				ss <<prefix<<"_"<< "ML";
+			}
+		
+			switch(transportMode){
+					case 0:
+						if(traffic){
+							ss <<"_UDP_cbr.csv";
+						}
+						else{
+							ss <<"_UDP_burst.csv";
+						}
+						break;
+					case 1:
+						if(traffic){
+							ss <<"_TCP_cbr.csv";
+						}
+						else{
+							ss <<"_TCP_burst.csv";
+						}
+						break;
+					case 2:
+						if(traffic){
+							ss <<"_MISTO_cbr.csv";
+						}
+						else{
+							ss <<"_MISTO_burst.csv";
+						}
+						break;
 			}
 			f = fopen(ss.str().c_str(), "a");
 			fprintf(f, "%d;%.2f;%.2f;%.2f;%d\n", nNodes, nearestNodeDistance, throughput/1024, delay, i->second.lostPackets);
 			fclose(f);
-    }
+		}
+	}
   }
-
+  
   meanThroughput  = sumThroughput / nNodes;
   meanDelayPackets /= nNodes;
   meanLostPackets /= nNodes;
