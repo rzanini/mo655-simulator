@@ -221,7 +221,7 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 		delay = i->second.delaySum.GetSeconds()/i->second.rxPackets;
 		delay = ((delay > 0) ? delay : 0);
 		meanDelayPackets += delay;
-		meanLostPackets += i->second.lostPackets/((i->second.timeLastTxPacket - i->second.timeFirstTxPacket).GetSeconds());
+		meanLostPackets += i->second.lostPackets;
 		
 		if(t.sourceAddress == devicesIP.GetAddress(nearestNode) || t.sourceAddress == devicesIP.GetAddress(farthestNode)){
 			std::stringstream ss;
