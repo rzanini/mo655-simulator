@@ -225,14 +225,17 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 		
 		if(t.sourceAddress == devicesIP.GetAddress(nearestNode) || t.sourceAddress == devicesIP.GetAddress(farthestNode)){
 			std::stringstream ss;
+			double distance;
 			//ss << "//repository//Datasets//";
 			//Nó de origem mais próximo
 			if(devicesIP.GetAddress(nearestNode) == t.sourceAddress){
 				ss <<prefix<<"_"<< "MP";
+				distance = nearestNodeDistance;
 			}
 			//Nó de origem mais distante
 			else if (devicesIP.GetAddress(farthestNode) == t.sourceAddress){
 				ss <<prefix<<"_"<< "ML";
+				distance = farthestNodeDistance;
 			}
 		
 			switch(transportMode){
@@ -262,7 +265,7 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 						break;
 			}
 			f = fopen(ss.str().c_str(), "a");
-			fprintf(f, "%d;%.2f;%.2f;%.2f;%d\n", nNodes, nearestNodeDistance, throughput/1024, delay, i->second.lostPackets);
+			fprintf(f, "%d;%.2f;%.2f;%.2f;%d\n", nNodes, distance, throughput/1024, delay, i->second.lostPackets);
 			fclose(f);
 		}
 	}
