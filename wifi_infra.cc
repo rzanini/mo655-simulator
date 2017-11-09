@@ -225,7 +225,7 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
 		
 		if(t.sourceAddress == devicesIP.GetAddress(nearestNode) || t.sourceAddress == devicesIP.GetAddress(farthestNode)){
 			std::stringstream ss;
-			ss << "./respository/Datasets/";
+			ss << "//repository//Datasets//";
 			//Nó de origem mais próximo
 			if(devicesIP.GetAddress(nearestNode) == t.sourceAddress){
 				ss <<prefix<<"_"<< "MP";
@@ -277,7 +277,7 @@ void buildStatistics(FlowMonitorHelper &flowmon, Ptr<FlowMonitor> &monitor, Ipv4
   cout << "Lost Packets (mean) : " << meanLostPackets << endl;
 
   std::stringstream ss;
-  ss << "./respository/Datasets/";
+  ss << "//repository//Datasets//";
   
   // if UDP/TCP/MISTO
     switch(transportMode){
